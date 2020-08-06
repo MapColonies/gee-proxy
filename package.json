@@ -1,0 +1,27 @@
+{
+  "name": "gee-proxy",
+  "version": "1.0.0",
+  "description": "This is a google earth api gw service that allows activating remote commands via ssh2.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run generate-config && node index.js",
+    "generate-config": "node scripts/generate-config.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "config": "^3.3.1",
+    "ssh2": "^0.8.9",
+    "duplexify": "^3.2.0",
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "morgan": "^1.6.1",
+    "serve-static": "^1.12.4",
+    "swagger-tools": "0.10.1",
+    "@map-colonies/mc-logger": "^1.0.0",
+    "@map-colonies/mc-probe": "~1.0.0"
+  }
+}

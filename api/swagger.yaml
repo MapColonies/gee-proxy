@@ -1,0 +1,436 @@
+swagger: "2.0"
+info:
+  description: "This is a google earth api gw service that allows activating remote commands via ssh2."
+  version: "1.0.0"
+  title: "gee proxy"
+  termsOfService: "None :)"
+  contact:
+    email: "asafmas@rnd-hub.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/api/v1"
+tags:
+- name: "Google Earth Enterprise"
+  description: "Activate Methods"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "http"
+paths:
+  /ssh/{command}:
+    get:
+      tags:
+      - "command"
+      summary: "execute command on google terminal"
+      description: "execute command on google terminal"
+      operationId: "ssh:command"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "command"
+        in: "path"
+        description: "linux command to be executed"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "400":
+          description: "Invalid operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "404":
+          description: "Operation bot found"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "405":
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+      x-swagger-router-controller: "Command"
+  /gee/cleanResource:
+    get:
+      tags:
+      - "gee"
+      summary: "Clean Imagery Asset"
+      description: ""
+      operationId: "cleanResource"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "assetName"
+        in: "query"
+        description: "Imagery Asset Name"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "query"
+        description: "<version> can be a number, 'current', or 'lastgood' if ommited <assetname> is checked for '?version=...'"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "400":
+          description: "Invalid operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "404":
+          description: "Operation bot found"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "405":
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+      x-swagger-router-controller: "Gee"
+  /gee/addImageryResource:
+    post:
+      tags:
+      - "gee"
+      summary: "Add new Imagery resource"
+      description: "Add Imagery new resource"
+      operationId: "addImageryResource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "assetData"
+        in: "body"
+        description: "Asset data that needs to be added to GEE"
+        required: true
+        schema:
+          $ref: "#/definitions/AssetData"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "400":
+          description: "Invalid operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "404":
+          description: "Operation bot found"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "405":
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+      x-swagger-router-controller: "Gee"
+  /gee/updateImageryResource:
+    post:
+      tags:
+      - "gee"
+      summary: "Update new Imagery resource"
+      description: "Update Imagery new resource"
+      operationId: "updateImageryResource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "resourceData"
+        in: "body"
+        description: "Asset data that needs to be updated to GEE"
+        required: true
+        schema:
+          $ref: "#/definitions/ResourceData"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "400":
+          description: "Invalid operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "404":
+          description: "Operation bot found"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "405":
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+      x-swagger-router-controller: "Gee"
+  /gee/publishDB:
+    post:
+      tags:
+      - "gee"
+      summary: "publish existing DB to GEE Server"
+      description: "publish existing DB to GEE Server"
+      operationId: "publishDB"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "publishDB"
+        in: "body"
+        description: "Publish DB Data"
+        required: true
+        schema:
+          $ref: "#/definitions/PublishDB"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "400":
+          description: "Invalid operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "404":
+          description: "Operation bot found"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "405":
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+      x-swagger-router-controller: "Gee"
+  /gee/splitFile:
+    post:
+      tags:
+      - "gee"
+      summary: "split file if needed"
+      description: "check if file need to be split and split it"
+      operationId: "splitFile"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "assetMinifiedData"
+        in: "body"
+        description: "Split File Data"
+        required: true
+        schema:
+          $ref: "#/definitions/AssetMinifiedData"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "400":
+          description: "Invalid operation"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "404":
+          description: "Operation bot found"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "405":
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+        "500":
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/GEEResponse"
+      x-swagger-router-controller: "Gee"
+definitions:
+  AssetData:
+    type: "object"
+    properties:
+      dataBase:
+        $ref: "#/definitions/DatabaseData"
+      project:
+        $ref: "#/definitions/ImageryProjectData"
+      resource:
+        $ref: "#/definitions/ResourceData"
+    example:
+      dataBase:
+        dataBaseType: "2D"
+        name: "testaaa/DataBases/Imagery_test_DB"
+        exists: false
+      resource:
+        isFlat: true
+        defaultMaskTypeParameters:
+          feather: 101
+          band: 1
+          holeSize: 1
+        resourcePath: "testaaa/Resources/Imagery/BlueMarble"
+        physicalPath: "/gevol/src/fusion/Imagery/bluemarble_4km.jp2"
+        mask: "nomask"
+      project:
+        name: "testaaa/Projects/Imagery_test_Project"
+        exists: false
+  AssetMinifiedData:
+    type: "object"
+    properties:
+      physicalPath:
+        type: "string"
+        description: "Resource Physical Path"
+        default: "/gevol/src/fusion/Imagery/testsplit/World_geotiff_h.tif"
+      resourcePath:
+        type: "string"
+        description: "Resource Path"
+        default: "resourcePath"
+      sizeInGB:
+        type: "number"
+        format: "float"
+        description: "Resource Physical size in GB (integer value)"
+        default: 90
+  ImageryProjectData:
+    type: "object"
+    properties:
+      exists:
+        type: "boolean"
+        description: "Is ImageryProject Already Exists, if no it will be created using the resource projection type"
+      name:
+        type: "string"
+        description: "ImageryProject Name"
+        default: "imageryProjectDataName"
+    example:
+      name: "imageryProjectDataName"
+      exists: true
+  DatabaseData:
+    type: "object"
+    properties:
+      exists:
+        type: "boolean"
+        description: "Is Database Already Exists"
+      name:
+        type: "string"
+        description: "Database Name"
+        default: "databaseName"
+      dataBaseType:
+        type: "string"
+        description: "Data Base Type"
+        enum:
+        - "2D"
+        - "3D"
+    example:
+      dataBaseType: "2D"
+      name: "databaseName"
+      exists: true
+  ResourceData:
+    type: "object"
+    properties:
+      physicalPath:
+        type: "string"
+        description: "Resource Physical Path"
+        default: "physicalPath"
+      resourcePath:
+        type: "string"
+        description: "Resource Path"
+        default: "resourcePath"
+      isFlat:
+        type: "boolean"
+        description: "Is Flat Projection (otherwise mercator)"
+        default: false
+      mask:
+        type: "string"
+        description: "Is Flat Projection (otherwise mercator)"
+        default: "nomask"
+        enum:
+        - "default"
+        - "nomask"
+        - "mask"
+      defaultMaskTypeParameters:
+        $ref: "#/definitions/DefaultMaskTypeParameters"
+    example:
+      isFlat: true
+      defaultMaskTypeParameters:
+        feather: 101
+        band: 1
+        holeSize: 1
+      resourcePath: "testaaa/Resources/Imagery/BlueMarble"
+      physicalPath: "/gevol/src/fusion/Imagery/bluemarble_4km.jp2"
+      mask: "default"
+  DefaultMaskTypeParameters:
+    type: "object"
+    properties:
+      band:
+        type: "integer"
+        format: "int32"
+        description: "Band number to use to generate mask"
+        minimum: 0
+      feather:
+        type: "integer"
+        format: "int32"
+        example: 100
+        description: "Pixel size of feather used in auto-generated mask"
+        minimum: 0
+      holeSize:
+        type: "integer"
+        format: "int32"
+        example: 0
+        description: "Regions larger than this that match the fill values will be masked out"
+        minimum: 0
+    example:
+      feather: 100
+      band: 0
+      holeSize: 0
+  PublishDB:
+    type: "object"
+    properties:
+      needToAddDB:
+        type: "boolean"
+        description: "Is DB need to be added to server (for new DB)"
+      dbFullPath:
+        type: "string"
+        description: "the full db path for example: /gevol/assets/Databases/Nameof2DDatabase.kmmdatabase/mapdb.kda/ver001/mapdb/"
+        default: "physicalPath"
+      stream_server_url:
+        type: "string"
+        description: "GEE Virtual Server URL (if empty Default server will be used)."
+        default: "stream_server_url"
+      targetpath:
+        type: "string"
+        description: "GEE Virtual Server URL (if empty Default server will be used)."
+        default: "the continues part of the url that the DB will be published to"
+      dbalias:
+        type: "string"
+        description: "Optionally assign an alias to make it easy to remember."
+        default: "dbalias"
+    example:
+      needToAddDB: true
+      dbFullPath: "/gevol/assets/testaaa2/DataBases/Imagery_test_DB.kmdatabase/mapdb.kda/ver001/mapdb/"
+      stream_server_url: "stream_server_url"
+      targetpath: "/testme"
+      dbalias: "alias"
+  GEEResponse:
+    type: "object"
+    properties:
+      status:
+        type: "integer"
+        format: "int32"
+        description: "response status code"
+      description:
+        type: "string"
+        description: "message from the server side"
+      error:
+        type: "string"
+        description: "error string, if success this field is empty"
+    example:
+      description: "description"
+      error: "error"
+      status: 0
