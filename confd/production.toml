@@ -1,0 +1,13 @@
+[template]
+src = "production.tmpl"
+dest = "config/production.json"
+keys = [
+	"/ssh/user",
+    "/ssh/host",
+    "/ssh/password",
+    "/ssh/port",
+    "/logger/level",
+    "/logger/environment",
+    "/server/port",
+    "/swagger/host"
+]

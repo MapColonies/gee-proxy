@@ -1,0 +1,18 @@
+{
+  "server": {
+    "port": {{ getv "/server/port" "8080" }}
+  },
+  "ssh": {
+    "user": "{{ getv "/ssh/user" "asaf" }}",
+    "host": "{{ getv "/ssh/host" "localhost" }}",
+    "password": "{{ getv "/ssh/password" "Aa123456" }}",
+    "port": {{ getv "/ssh/port" "30022" }}
+  },
+  "logger": {
+    "level": "{{ getv "/logger/level" "debug" }}",
+    "environment": "{{ getv "/logger/environment" "prod" }}"
+  },
+  "swagger": {
+    "host": "{{ getv "/swagger/host" "http://localhost:8080" }}"
+  }
+}
